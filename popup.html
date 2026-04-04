@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solvery Slots Sync</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="app">
+      <section class="panel hero">
+        <p class="eyebrow">Solvery Slots Sync</p>
+        <h1>Preview и ручной sync</h1>
+        <p class="muted">Google Calendar -> Solvery Available Hours</p>
+      </section>
+
+      <section class="panel controls">
+        <div class="button-row">
+          <button id="connectGoogleButton" class="button primary">Connect Google</button>
+          <button id="toggleSettingsButton" class="button secondary">Settings</button>
+        </div>
+        <div class="button-row">
+          <button id="previewButton" class="button secondary">Preview</button>
+          <button id="syncButton" class="button primary" disabled>Sync now</button>
+        </div>
+        <p id="status" class="status">Откройте страницу календаря Solvery в активной вкладке.</p>
+      </section>
+
+      <section id="settingsPanel" class="panel settings-panel hidden">
+        <div class="list-header">
+          <h2>Settings</h2>
+          <button id="closeSettingsButton" class="text-button" type="button">Close</button>
+        </div>
+
+        <label class="field">
+          <span>Google OAuth Client ID</span>
+          <input id="googleClientIdInput" type="text" placeholder="1234567890-abc.apps.googleusercontent.com">
+        </label>
+
+        <label class="field">
+          <span>Redirect URI</span>
+          <input id="redirectUriInput" type="text" readonly>
+        </label>
+
+        <label class="field">
+          <span>Google Calendar name</span>
+          <input id="calendarNameInput" type="text" value="Solvery Slots">
+        </label>
+
+        <label class="field">
+          <span>Event marker</span>
+          <input id="eventMarkerInput" type="text" value="Solvery Slots">
+        </label>
+
+        <label class="field">
+          <span>Lookahead days</span>
+          <input id="lookaheadDaysInput" type="number" min="1" max="365" value="30">
+        </label>
+
+        <p class="muted small">
+          Добавьте этот Redirect URI в настройки Google OAuth клиента. Scope текущей версии: `calendar.readonly`.
+        </p>
+
+        <div class="button-row">
+          <button id="saveSettingsButton" class="button primary" type="button">Save settings</button>
+        </div>
+
+        <p id="settingsStatus" class="status"></p>
+      </section>
+
+      <section class="panel">
+        <div class="summary-grid">
+          <div>
+            <span class="summary-label">Calendar slots</span>
+            <strong id="calendarSlotsCount">0</strong>
+          </div>
+          <div>
+            <span class="summary-label">Existing on Solvery</span>
+            <strong id="existingSlotsCount">0</strong>
+          </div>
+          <div>
+            <span class="summary-label">To create</span>
+            <strong id="missingSlotsCount">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel list-panel">
+        <div class="list-header">
+          <h2>Preview</h2>
+          <span class="muted">Сегодня + 30 дней</span>
+        </div>
+        <div id="previewList" class="slot-list empty">
+          Слоты еще не загружены.
+        </div>
+      </section>
+
+      <section class="panel list-panel">
+        <div class="list-header">
+          <h2>Failures</h2>
+          <span class="muted">Последний sync</span>
+        </div>
+        <div id="failureList" class="slot-list empty">
+          Ошибок пока нет.
+        </div>
+      </section>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

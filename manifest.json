@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "Solvery Slots Sync",
+  "version": "0.1.0",
+  "description": "Preview and sync Solvery slots from Google Calendar into Solvery.",
+  "permissions": [
+    "activeTab",
+    "identity",
+    "storage",
+    "tabs",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "https://accounts.google.com/o/oauth2/*",
+    "https://www.googleapis.com/calendar/v3/*",
+    "https://solvery.io/ru/profile/mentor-calendar*",
+    "https://calndr.pro/event-types/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Solvery Slots Sync",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://solvery.io/ru/profile/mentor-calendar*"
+      ],
+      "js": [
+        "content/solvery-page.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://calndr.pro/event-types/*"
+      ],
+      "js": [
+        "content/calndr-frame.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }
+  ]
+}

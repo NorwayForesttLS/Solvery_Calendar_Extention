@@ -1,0 +1,7 @@
+{
+  "name": "solvery-slots-sync",
+  "private": true,
+  "scripts": {
+    "test": "node --test"
+  }
+}
